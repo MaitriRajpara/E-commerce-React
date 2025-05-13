@@ -9,7 +9,6 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<ProtectedRoute />}>
-          <Route path="/product" element={<ProductList />} />
           <Route path="/" element={<ProductList />} />
         </Route>
         <Route path="/login" element={<Login />} />
