@@ -1,0 +1,1 @@
+export type LoginFormInputs = z.infer<typeof loginSchema>;
