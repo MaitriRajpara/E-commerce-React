@@ -99,7 +99,7 @@ const SignUp = () => {
           Already have an account?
           <span
             className="text-blue-400 hover:underline cursor-pointer ml-1"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/")}
           >
             Login
           </span>
