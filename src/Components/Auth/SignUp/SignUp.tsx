@@ -60,7 +60,7 @@ const SignUp = () => {
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("currentUser", JSON.stringify(newUser));
-    navigate("/product");
+    navigate("/");
   };
 
   return (

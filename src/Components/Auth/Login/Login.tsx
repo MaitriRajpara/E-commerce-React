@@ -36,7 +36,7 @@ const Login = () => {
 
     if (found) {
       localStorage.setItem("currentUser", JSON.stringify(found));
-      navigate("/product");
+      navigate("/");
     } else {
       setError("email", {
         type: "manual",
