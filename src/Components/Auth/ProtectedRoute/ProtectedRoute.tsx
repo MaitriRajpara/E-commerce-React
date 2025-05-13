@@ -1,9 +1,9 @@
-import { Navigate } from "react-router-dom";
-import type { ReactNode } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const user = localStorage.getItem("currentUser");
-  return user ? children : <Navigate to="/" replace />;
+export const ProtectedRoute = () => {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
+  return <Outlet />;
 };
-
-export default ProtectedRoute;

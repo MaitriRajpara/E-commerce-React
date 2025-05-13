@@ -1,44 +1,51 @@
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 
 const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: z.string().email({ message: "Invalid email address" }),
+  password: z.string().min(1, { message: "Password is required" }),
 });
 
-export type LoginFormInputs = z.infer<typeof loginSchema>;
+type LoginFormInputs = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("currentUser")) {
-      navigate("/product");
-    }
-  }, [navigate]);
-
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<LoginFormInputs>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit = (data: LoginFormInputs) => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
+
     const found = users.find(
       (u: LoginFormInputs) =>
         u.email === data.email && u.password === data.password
     );
+
     if (found) {
       localStorage.setItem("currentUser", JSON.stringify(found));
       navigate("/product");
     } else {
-      alert("No such user");
+      setError("email", {
+        type: "manual",
+        message: "Invalid email or password",
+      });
+      setError("password", {
+        type: "manual",
+        message: "Invalid email or password",
+      });
     }
   };
 
@@ -55,6 +62,7 @@ const Login = () => {
           {errors.email && (
             <span className="text-sm text-red-400">{errors.email.message}</span>
           )}
+
           <input
             type="password"
             className="p-3 text-base bg-zinc-800 border border-zinc-700 rounded-lg placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -66,6 +74,7 @@ const Login = () => {
               {errors.password.message}
             </span>
           )}
+
           <button
             type="submit"
             className="p-3 bg-blue-600 text-white text-base rounded-lg hover:bg-blue-700 transition-colors"
@@ -73,6 +82,7 @@ const Login = () => {
             Login
           </button>
         </form>
+
         <p className="mt-5 text-sm text-gray-400">
           Don't have an account?
           <span

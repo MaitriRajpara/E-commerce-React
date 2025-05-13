@@ -1,10 +1,10 @@
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 
 const signUpSchema = z.object({
+  id: z.string().optional(),
   name: z
     .string()
     .min(2, { message: "Name must be at least 2 characters long" }),
@@ -25,30 +25,41 @@ type SignUpFormInputs = z.infer<typeof signUpSchema>;
 const SignUp = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (localStorage.getItem("currentUser")) {
-      navigate("/product");
-    }
-  }, [navigate]);
-
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<SignUpFormInputs>({
     resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      id: "",
+      name: "",
+      email: "",
+      password: "",
+    },
   });
 
   const onSubmit = (data: SignUpFormInputs) => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
+
     const exists = users.some((u: SignUpFormInputs) => u.email === data.email);
     if (exists) {
-      alert("Email already exists");
+      setError("email", {
+        type: "manual",
+        message: "Email already exists",
+      });
       return;
     }
-    users.push(data);
+
+    const newUser = {
+      ...data,
+      id: crypto.randomUUID(),
+    };
+
+    users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem("currentUser", JSON.stringify(data));
+    localStorage.setItem("currentUser", JSON.stringify(newUser));
     navigate("/product");
   };
 
@@ -99,7 +110,7 @@ const SignUp = () => {
           Already have an account?
           <span
             className="text-blue-400 hover:underline cursor-pointer ml-1"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/login")}
           >
             Login
           </span>
