@@ -31,8 +31,8 @@ const Login = () => {
     const users = storage.get("users") || [];
 
     const found = users.find(
-      (u: LoginFormInputs) =>
-        u.email === data.email && u.password === data.password
+      (user: LoginFormInputs) =>
+        user.email === data.email && user.password === data.password
     );
 
     if (found) {

@@ -44,7 +44,7 @@ const SignUp = () => {
   const onSubmit = (data: SignUpFormInputs) => {
     const users = storage.get("users") || [];
 
-    const exists = users.some((u: SignUpFormInputs) => u.email === data.email);
+    const exists = users.some((user: SignUpFormInputs) => user.email === data.email);
     if (exists) {
       setError("email", {
         type: "manual",
