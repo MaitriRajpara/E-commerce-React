@@ -1,15 +1,11 @@
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { storage } from "../../Utils/LocalStorage";
 
-const loginSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(1, { message: "Password is required" }),
-});
-
-type LoginFormInputs = z.infer<typeof loginSchema>;
+type LoginFormInputs = {
+  email: string;
+  password: string;
+};
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,7 +16,6 @@ const Login = () => {
     setError,
     formState: { errors },
   } = useForm<LoginFormInputs>({
-    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -58,7 +53,7 @@ const Login = () => {
           <input
             className="p-3 text-base bg-zinc-800 border border-zinc-700 rounded-lg placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Email"
-            {...register("email")}
+            {...register("email", { required: "Email is required" })}
           />
           {errors.email && (
             <span className="text-sm text-red-400">{errors.email.message}</span>
@@ -68,7 +63,7 @@ const Login = () => {
             type="password"
             className="p-3 text-base bg-zinc-800 border border-zinc-700 rounded-lg placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Password"
-            {...register("password")}
+            {...register("password", { required: "Password is required" })}
           />
           {errors.password && (
             <span className="text-sm text-red-400">
