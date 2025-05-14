@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import { storage } from "../../Utils/LocalStorage";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -27,7 +28,7 @@ const Login = () => {
   });
 
   const onSubmit = (data: LoginFormInputs) => {
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const users = storage.get("users") || [];
 
     const found = users.find(
       (u: LoginFormInputs) =>
@@ -35,7 +36,7 @@ const Login = () => {
     );
 
     if (found) {
-      localStorage.setItem("currentUser", JSON.stringify(found));
+      storage.set("currentUser", found);
       navigate("/");
     } else {
       setError("email", {

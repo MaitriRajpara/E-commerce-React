@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
+import { storage } from "../../Utils/LocalStorage";
 
 const signUpSchema = z.object({
   id: z.string().optional(),
@@ -41,7 +42,7 @@ const SignUp = () => {
   });
 
   const onSubmit = (data: SignUpFormInputs) => {
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const users = storage.get("users") || [];
 
     const exists = users.some((u: SignUpFormInputs) => u.email === data.email);
     if (exists) {
