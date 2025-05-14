@@ -41,11 +41,11 @@ const Login = () => {
     } else {
       setError("email", {
         type: "manual",
-        message: "Invalid email or password",
+        message: "No such email",
       });
       setError("password", {
         type: "manual",
-        message: "Invalid email or password",
+        message: "Invalid password",
       });
     }
   };
