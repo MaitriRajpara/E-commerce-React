@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { storage } from "../../Utils/LocalStorage";
 
 const signUpSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z
     .string()
     .min(2, { message: "Name must be at least 2 characters long" }),
