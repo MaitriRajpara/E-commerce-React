@@ -61,8 +61,8 @@ const SignUp = () => {
     };
 
     users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem("currentUser", JSON.stringify({ id: newUser.id }));
+    storage.set("users", users);
+    storage.set("currentUser", { id: newUser.id });
     navigate("/");
   };
 
