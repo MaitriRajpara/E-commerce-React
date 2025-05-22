@@ -36,11 +36,11 @@ const Login = () => {
     } else {
       setError("email", {
         type: "manual",
-        message: "No such email",
+        message: "Invalid email or password",
       });
       setError("password", {
         type: "manual",
-        message: "Invalid password",
+        message: "Invalid email or password",
       });
     }
   };
