@@ -1,21 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SignUp from "./Components/Auth/SignUp/SignUp";
-import ProductList from "./Components/Products/ProductList";
-import Login from "./Components/Auth/Login/Login";
-import { ProtectedRoute } from "./Components/Auth/ProtectedRoute/ProtectedRoute";
+import Login from "./Components/Authentication/Login/Login";
+import SignUp from "./Components/Authentication/SignUp/SignUp";
+import Product from "./Components/Products/ProductList";
+import { ProtectedRoute } from "./Components/Authentication/ProtectedRoute/ProctedRoute";
+import ProductDetail from "./Components/Products/ProductDetail";
+import { SortProvider } from "./Components/Context/SortContext";
+import { SearchProvider } from "./Components/Context/SearchContext";
 
-const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<ProtectedRoute />}>
-          <Route path="/" element={<ProductList />} />
-        </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-      </Routes>
-    </Router>
-  );
-};
+const App = () => (
+  <SortProvider>
+    <SearchProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<ProtectedRoute />}>
+            <Route path="/" element={<Product />} />
+            <Route path="/productdetail/:id" element={<ProductDetail />} />
+          </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Routes>
+      </Router>
+    </SearchProvider>
+  </SortProvider>
+);
 
 export default App;

@@ -1,11 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { storage } from "../../../Utils/LocalStorage";
-
-type LoginFormInputs = {
-  email: string;
-  password: string;
-};
+import type {LoginFormInputs} from "../../../Type/Type"
 
 const Login = () => {
   const navigate = useNavigate();
