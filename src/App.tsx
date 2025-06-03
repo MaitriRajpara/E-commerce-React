@@ -6,6 +6,7 @@ import { ProtectedRoute } from "./Components/Authentication/ProtectedRoute/Proct
 import ProductDetail from "./Components/Products/ProductDetail";
 import { SortProvider } from "./Components/Context/SortContext";
 import { SearchProvider } from "./Components/Context/SearchContext";
+import NotFound from "./Components/Notfound.tsx/NotFound";
 
 const App = () => (
   <SortProvider>
@@ -18,6 +19,7 @@ const App = () => (
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </SearchProvider>
